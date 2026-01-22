@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TRAMIL Plant Monograph Schema",
+  "description": "Complete data structure for TRAMIL Caribbean medicinal plants",
+  "type": "object",
+  "properties": {
+    "plants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "description": "Unique identifier (UUID)"},
+          "scientific_name": {"type": "string", "description": "Scientific binomial name"},
+          "author_abbreviation": {"type": "string", "description": "Author abbreviation (e.g., L., Desv.)"},
+          "botanical_family": {"type": "string", "description": "Botanical family name"},
+          "vernacular_names": {
+            "type": "object",
+            "properties": {
+              "en": {"type": "array", "items": {"type": "string"}},
+              "fr": {"type": "array", "items": {"type": "string"}},
+              "es": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "geographic_distribution": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Countries/regions where plant is found"
+          },
+          "uses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "health_problem": {"type": "string"},
+                "preparation_type": {"type": "string", "enum": ["infusion", "decoction", "poultice", "tincture", "juice", "powder", "tea", "other"]},
+                "route_of_administration": {"type": "string", "enum": ["oral", "topical", "inhalation", "other"]},
+                "evidence_level": {"type": "string", "enum": ["traditional", "supported", "documented", "clinical"]},
+                "safety_notes": {"type": "string"}
+              }
+            }
+          },
+          "toxicity_info": {
+            "type": "object",
+            "properties": {
+              "is_toxic": {"type": "boolean"},
+              "toxicity_level": {"type": "string", "enum": ["none", "low", "moderate", "high"]},
+              "warnings": {"type": "array", "items": {"type": "string"}},
+              "contraindications": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {"type": "string", "enum": ["photo", "drawing", "herbarium", "scan", "section"]},
+                "url": {"type": "string", "format": "uri"},
+                "credit": {"type": "string"},
+                "caption": {"type": "string"}
+              }
+            }
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string", "const": "TRAMIL"},
+              "url": {"type": "string", "format": "uri"},
+              "date_accessed": {"type": "string", "format": "date-time"}
+            }
+          }
+        },
+        "required": ["id", "scientific_name", "botanical_family"]
+      }
+    }
+  }
+}
